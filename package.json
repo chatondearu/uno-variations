@@ -1,0 +1,74 @@
+{
+  "name": "uno-variations",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.13.1",
+  "description": "UnoCSS variations a first-class variant API.",
+  "author": "ChatonDeAru <hi@chatondearu.fr>",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/chatondearu",
+  "homepage": "https://github.com/chatondearu/uno-variations#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chatondearu/uno-variations.git"
+  },
+  "bugs": "https://github.com/chatondearu/uno-variations/issues",
+  "keywords": [
+    "unocss",
+    "variations",
+    "css",
+    "tailwindcss",
+    "tailwind-variants"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "obuild",
+    "dev": "obuild --stub",
+    "lint": "eslint",
+    "prepublishOnly": "nr build",
+    "release": "bumpp && pnpm publish",
+    "start": "tsx src/index.ts",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepare": "simple-git-hooks"
+  },
+  "dependencies": {
+    "defu": "catalog:build",
+    "vue": "catalog:build"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "catalog:cli",
+    "@antfu/ni": "catalog:cli",
+    "@chatondearu/eslint-config": "catalog:cli",
+    "@types/node": "catalog:types",
+    "bumpp": "catalog:cli",
+    "eslint": "catalog:cli",
+    "eslint-plugin-format": "catalog:cli",
+    "lint-staged": "catalog:cli",
+    "obuild": "catalog:cli",
+    "simple-git-hooks": "catalog:cli",
+    "tinyexec": "catalog:utils",
+    "tsx": "catalog:cli",
+    "typescript": "catalog:cli",
+    "vite": "catalog:cli",
+    "vitest": "catalog:testing",
+    "vitest-package-exports": "catalog:testing",
+    "yaml": "catalog:testing"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}
