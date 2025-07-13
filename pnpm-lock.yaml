@@ -49,10 +49,6 @@ catalogs:
     vite:
       specifier: ^6.2.1
       version: 6.3.5
-  inlined:
-    '@antfu/utils':
-      specifier: ^0.1.0
-      version: 0.1.7
   testing:
     vitest:
       specifier: ^3.0.8
@@ -89,9 +85,6 @@ importers:
       '@antfu/ni':
         specifier: catalog:cli
         version: 24.4.0
-      '@antfu/utils':
-        specifier: catalog:inlined
-        version: 0.1.7
       '@chatondearu/eslint-config':
         specifier: catalog:cli
         version: 0.2.1(@antfu/eslint-config@4.16.2(@vue/compiler-sfc@3.5.17)(eslint-plugin-format@1.0.1(eslint@9.31.0(jiti@2.4.2)))(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@22.16.3)(jiti@2.4.2)(tsx@4.20.3)(yaml@2.8.0)))(eslint-plugin-format@1.0.1(eslint@9.31.0(jiti@2.4.2)))(eslint@9.31.0(jiti@2.4.2))
@@ -195,9 +188,6 @@ packages:
   '@antfu/ni@24.4.0':
     resolution: {integrity: sha512-ZjriRbGyWGSrBE1RY2qBIXyilejMWLDWh2Go2dqFottyiuOze36+BpPch2z2WnGEgEbzTBVPetMmQvt0xt+iww==}
     hasBin: true
-
-  '@antfu/utils@0.1.7':
-    resolution: {integrity: sha512-XbmXbhrjfxQq+ishOKeUIK1VYxQV0B+ZkAQkz00bxhmQd5izdT0YRSDwkyH/KX46gFVBMd+6anvSDlciUt3L4A==}
 
   '@babel/generator@7.28.0':
     resolution: {integrity: sha512-lJjzvrbEeWrhB4P3QBsH7tey117PjLZnDbLiQEKjQ/fNJTjuq4HSqgFA+UNSwZT8D7dxxbnuSBMsa1lrWzKlQg==}
@@ -2676,8 +2666,6 @@ snapshots:
       fzf: 0.5.2
       package-manager-detector: 1.3.0
       tinyexec: 1.0.1
-
-  '@antfu/utils@0.1.7': {}
 
   '@babel/generator@7.28.0':
     dependencies:

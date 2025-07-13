@@ -7,7 +7,49 @@
 [![License][license-src]][license-href]
 [![code style][code-style-src]][code-style-href]
 
+> 🚧 Work In Progress - the API is going to move a lot.
+> Use the lib only if you want to help in his development.
+
 UnoCSS Variations a first-class variant API.
+
+## Install
+
+`pnpm add uno-variations --save-catalog-name prod`
+
+## Usage
+
+```typescript
+import { useUnoUi } from 'uno-variations'
+
+const props = defineProps<{
+  class?: any
+  state: 'default' | 'error' | 'success'
+}>()
+
+const { uu } = useUnoUi({
+  form: {
+    base: 'flex flex-col gap-4 border-1',
+    variations: {
+      state: {
+        default: 'border-grey',
+        error: 'border-red',
+        success: 'border-green',
+      },
+    },
+    default: {
+      state: 'default'
+    }
+  },
+}, computed(() => ({
+  state: props.state,
+})))
+```
+
+```html
+<form :class="uu.form({ classes: props.class })">
+  <!-- ... -->
+</form>
+```
 
 ## License
 
