@@ -1,7 +1,7 @@
 {
   "name": "uno-variations",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "packageManager": "pnpm@10.13.1",
   "description": "UnoCSS variations a first-class variant API.",
   "author": "ChatonDeAru <hi@chatondearu.fr>",
