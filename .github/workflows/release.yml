@@ -1,7 +1,6 @@
 name: Release
 
 permissions:
-  id-token: write
   contents: write
 
 on:
@@ -9,27 +8,36 @@ on:
     tags:
       - 'v*'
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
           registry-url: https://registry.npmjs.org/
 
-      - run: pnpm dlx changelogithub
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec changelogithub
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      # # Uncomment the following lines to publish to npm on CI
-      #
-      # - run: pnpm install
-      # - run: pnpm publish --no-git-checks -r --access public
+      # npm publish remains intentionally manual via `pnpm release`.
+      # If CI publish is desired, uncomment and set NPM_TOKEN.
+      # - run: pnpm publish --no-git-checks --access public
       #   env:
       #     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       #     NPM_CONFIG_PROVENANCE: true

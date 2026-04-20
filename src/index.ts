@@ -1,64 +1,73 @@
-import type { ComputedRef, MaybeRef, Ref } from 'vue'
+import type { ComputedRef, MaybeRef } from 'vue'
 import { defu } from 'defu'
-import { computed, ref, unref } from 'vue'
+import { computed, unref } from 'vue'
 
-export type UnoUIComputedVariant<T extends string> = (config: UnoUiConfig<T>, props: any) => string
+export type UnoUiProps<T extends string> = Record<T, unknown> & Record<string, unknown>
 
-export type UnoUIVariations<T extends string> = Record<T, UnoUIVariation<T>>
+export type UnoUIComputedVariant<T extends string> = (config: UnoUiConfig<T>, props: UnoUiProps<T>) => string
 
-export type UnoUIVariation<T extends string> = string | Record<string, string | Record<string, string | UnoUIComputedVariant<T>>>
+type UnoUIVariationMap<T extends string> = Record<string, string | UnoUIComputedVariant<T>>
+
+export type UnoUIVariation<T extends string> = string | UnoUIVariationMap<T>
+
+export type UnoUIVariations<T extends string> = Partial<Record<T, UnoUIVariation<T>>>
 
 export interface UnoUiElement<T extends string> {
   base: string | string[]
-  variations?: Record<T, UnoUIVariation<T>>
+  variations?: UnoUIVariations<T>
 }
 
-export type UnoUiConfig<T extends string> = Record<string, UnoUiElement<T>> & { default: Record<T, any> }
+export type UnoUiConfig<T extends string> = Record<string, UnoUiElement<T>> & { default: Partial<Record<T, unknown>> }
 
 export function useUnoUi<T extends string>(
   config: UnoUiConfig<T>,
-  variations: MaybeRef<Record<T, any>>,
+  variations: MaybeRef<UnoUiProps<T>>,
 ): {
   uu: ComputedRef<Record<string, (options: {
     classes: string
-    [key: string]: any
+    [key: string]: unknown
   }) => string>>
 } {
-  const props = ref(variations) as Ref<Record<T, any>>
-
-  function retrieveElementVariationClasses(elementVariations: UnoUIVariations<T>, variantionKey: T, variantionValue: any): string {
-    if (!elementVariations?.[variantionKey]) {
-      if (variantionKey in elementVariations) {
-        console.warn('no variantion found for:', variantionKey, 'in ', elementVariations)
-      }
-
+  function retrieveElementVariationClasses(elementVariations: UnoUIVariations<T>, variationKey: T, variationValue: unknown, propsValue: UnoUiProps<T>): string {
+    const variantDefinition = elementVariations[variationKey]
+    if (!variantDefinition)
       return ''
+
+    if (typeof variantDefinition === 'string') {
+      return variationValue ? variantDefinition : ''
     }
 
-    const classes = elementVariations?.[variantionKey]?.[variantionValue as keyof typeof elementVariations[T]] || ''
-    return typeof classes === 'function' ? classes(elementVariations, defu(unref(props), config.default)) : classes
+    const classes = variantDefinition[String(variationValue)]
+    if (!classes)
+      return ''
+
+    return typeof classes === 'function' ? classes(config, propsValue) : classes
   }
 
   function computeVariationsOfElement(
     elementConfig: UnoUiElement<T>,
-    props: Record<T, any>,
+    propsValue: UnoUiProps<T>,
   ) {
     const elementVariations = elementConfig.variations
 
     if (!elementVariations) {
-      return () => ''
+      return (options?: { classes: string, [key: string]: unknown }): string => {
+        return [elementConfig.base, options?.classes].filter(Boolean).join(' ')
+      }
     }
 
-    return (options?: { classes: string, [key: string]: any }): string => {
+    return (options?: { classes: string, [key: string]: unknown }): string => {
       return [
         elementConfig.base,
         options?.classes,
-        ...Object.entries(props)
+        ...Object.entries(propsValue)
           .reduce((acc, [variationKey, variationValue]) => {
+            const resolvedVariationValue = variationValue ?? config.default?.[variationKey as T]
             acc.push(retrieveElementVariationClasses(
               elementVariations,
               variationKey as T,
-              variationValue || config.default?.[variationKey as T],
+              resolvedVariationValue,
+              propsValue,
             ))
 
             return acc
@@ -68,7 +77,7 @@ export function useUnoUi<T extends string>(
   }
 
   const uu = computed(() => {
-    const propsValue = defu(unref(props), config.default)
+    const propsValue = defu(unref(variations), config.default) as UnoUiProps<T>
 
     const computedElements = Object.entries(config).reduce((acc, [elementKey, elementConfig]) => {
       if (elementKey === 'default') {
@@ -80,7 +89,7 @@ export function useUnoUi<T extends string>(
       }
 
       return acc
-    }, {} as Record<string, (options: { classes: string, [key: string]: any }) => string>)
+    }, {} as Record<string, (options: { classes: string, [key: string]: unknown }) => string>)
 
     return computedElements
   })

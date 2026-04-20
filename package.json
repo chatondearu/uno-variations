@@ -3,6 +3,9 @@
   "type": "module",
   "version": "0.1.0",
   "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "description": "UnoCSS variations a first-class variant API.",
   "author": "ChatonDeAru <hi@chatondearu.fr>",
   "license": "MIT",
@@ -66,7 +69,7 @@
     "yaml": "catalog:testing"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged"
+    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && pnpm exec lint-staged"
   },
   "lint-staged": {
     "*": "eslint --fix"
