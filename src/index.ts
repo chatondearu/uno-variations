@@ -52,13 +52,13 @@ export function useUnoUi<T extends string>(
 
     if (!elementVariations) {
       return (options?: { classes: string, [key: string]: unknown }): string => {
-        return [elementConfig.base, options?.classes].filter(Boolean).join(' ')
+        return [...(Array.isArray(elementConfig.base) ? elementConfig.base : [elementConfig.base]), options?.classes].filter(Boolean).join(' ')
       }
     }
 
     return (options?: { classes: string, [key: string]: unknown }): string => {
       return [
-        elementConfig.base,
+        ...(Array.isArray(elementConfig.base) ? elementConfig.base : [elementConfig.base]),
         options?.classes,
         ...Object.entries(propsValue)
           .reduce((acc, [variationKey, variationValue]) => {

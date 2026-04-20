@@ -97,6 +97,39 @@ describe('uno-ui', () => {
     expect(uu.value.card({ classes: 'p-2' })).toBe('card-base p-2')
   })
 
+  it('flattens array base classes when an element has no variations', () => {
+    const config = {
+      button: {
+        base: ['btn', 'font-medium'],
+      },
+      default: {},
+    }
+
+    const { uu } = useUnoUi<'variant'>(config, {} as Record<string, unknown>)
+    expect(uu.value.button({ classes: 'p-4' })).toBe('btn font-medium p-4')
+  })
+
+  it('flattens array base classes when an element has variations', () => {
+    const config = {
+      button: {
+        base: ['btn', 'font-medium'],
+        variations: {
+          variant: {
+            primary: 'button-primary',
+          },
+        },
+      },
+      default: {
+        variant: 'primary',
+      },
+    }
+
+    const { uu } = useUnoUi<'variant'>(config, {
+      variant: 'primary',
+    } as Record<string, unknown>)
+    expect(uu.value.button({ classes: 'p-4' })).toBe('btn font-medium p-4 button-primary')
+  })
+
   it('passes full config and merged props to computed variations', () => {
     const config = {
       button: {

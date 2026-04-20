@@ -37,6 +37,9 @@
   "scripts": {
     "build": "obuild",
     "dev": "obuild --stub",
+    "docs:build": "vitepress build doc",
+    "docs:dev": "vitepress dev doc",
+    "docs:preview": "vitepress preview doc",
     "lint": "eslint",
     "prepublishOnly": "nr build",
     "release": "bumpp && pnpm publish",
@@ -64,6 +67,7 @@
     "tsx": "catalog:cli",
     "typescript": "catalog:cli",
     "vite": "catalog:cli",
+    "vitepress": "catalog:cli",
     "vitest": "catalog:testing",
     "vitest-package-exports": "catalog:testing",
     "yaml": "catalog:testing"

@@ -18,6 +18,7 @@ catalogs:
     tsx: ^4.19.3
     typescript: ^5.8.2
     vite: ^6.2.1
+    vitepress: ^1.6.4
   testing:
     vitest: ^3.0.8
     vitest-package-exports: ^0.1.1

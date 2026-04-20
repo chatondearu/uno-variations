@@ -25,6 +25,7 @@ Full documentation: [doc/README.md](doc/README.md)
 ## Development
 
 ```bash
+nix develop
 pnpm install
 pnpm lint
 pnpm typecheck
