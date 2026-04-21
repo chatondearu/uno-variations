@@ -3,9 +3,6 @@
   "type": "module",
   "version": "0.1.0",
   "packageManager": "pnpm@10.13.1",
-  "engines": {
-    "node": ">=22.0.0"
-  },
   "description": "UnoCSS variations a first-class variant API.",
   "author": "ChatonDeAru <hi@chatondearu.fr>",
   "license": "MIT",
@@ -25,7 +22,11 @@
   ],
   "sideEffects": false,
   "exports": {
-    ".": "./dist/index.mjs",
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.mjs",
@@ -34,6 +35,9 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "build": "obuild",
     "dev": "obuild --stub",
