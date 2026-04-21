@@ -56,7 +56,7 @@ describe('uno-ui', () => {
       color: 'blue',
       size: 'md',
       loading: true,
-    } as Record<string, unknown>)
+    } as never)
 
     expect(uu.value.button({ classes: '' })).toContain('button-loading')
   })
@@ -79,7 +79,7 @@ describe('uno-ui', () => {
 
     const { uu } = useUnoUi<'disabled'>(config, {
       disabled: false,
-    } as Record<string, unknown>)
+    } as never)
 
     expect(uu.value.button({ classes: '' })).toContain('is-enabled')
     expect(uu.value.button({ classes: '' })).not.toContain('is-disabled')
@@ -93,7 +93,7 @@ describe('uno-ui', () => {
       default: {},
     }
 
-    const { uu } = useUnoUi<'variant'>(config, {} as Record<string, unknown>)
+    const { uu } = useUnoUi<'variant'>(config, {} as never)
     expect(uu.value.card({ classes: 'p-2' })).toBe('card-base p-2')
   })
 
@@ -105,7 +105,7 @@ describe('uno-ui', () => {
       default: {},
     }
 
-    const { uu } = useUnoUi<'variant'>(config, {} as Record<string, unknown>)
+    const { uu } = useUnoUi<'variant'>(config, {} as never)
     expect(uu.value.button({ classes: 'p-4' })).toBe('btn font-medium p-4')
   })
 
@@ -126,7 +126,7 @@ describe('uno-ui', () => {
 
     const { uu } = useUnoUi<'variant'>(config, {
       variant: 'primary',
-    } as Record<string, unknown>)
+    } as never)
     expect(uu.value.button({ classes: 'p-4' })).toBe('btn font-medium p-4 button-primary')
   })
 
@@ -147,10 +147,10 @@ describe('uno-ui', () => {
       },
     }
 
-    const { uu } = useUnoUi<'variant'>(config, {
+    const { uu } = useUnoUi<'variant' | 'color'>(config, {
       variant: 'custom',
       color: 'red',
-    } as Record<string, unknown>)
+    } as never)
 
     expect(uu.value.button({ classes: '' })).toContain('blue-red')
   })

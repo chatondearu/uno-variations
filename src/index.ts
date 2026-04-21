@@ -17,7 +17,10 @@ export interface UnoUiElement<T extends string> {
   variations?: UnoUIVariations<T>
 }
 
-export type UnoUiConfig<T extends string> = Record<string, UnoUiElement<T>> & { default: Partial<Record<T, unknown>> }
+export interface UnoUiConfig<T extends string> {
+  default: Partial<Record<T, unknown>>
+  [key: string]: unknown
+}
 
 export function useUnoUi<T extends string>(
   config: UnoUiConfig<T>,
