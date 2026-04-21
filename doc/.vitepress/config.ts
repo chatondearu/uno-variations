@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  base: '/uno-variations/',
   title: 'uno-variations',
   description: 'A first-class variant API for UnoCSS.',
   cleanUrls: true,
