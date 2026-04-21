@@ -37,6 +37,7 @@ jobs:
           path: doc/.vitepress/dist
 
   deploy:
+    if: github.event_name == 'workflow_dispatch'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

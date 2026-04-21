@@ -1,9 +1,13 @@
 packages:
   - .
 
+overrides:
+  '@typescript-eslint/typescript-estree>minimatch': ^9.0.7
+  eslint>minimatch: ^3.1.3
+  rollup: ^4.59.0
 catalogs:
   build:
-    defu: ^6.1.4
+    defu: ^6.1.7
     vue: ^3.5.17
   cli:
     '@antfu/eslint-config': ^4.16.2
@@ -13,11 +17,11 @@ catalogs:
     eslint: ^9.22.0
     eslint-plugin-format: ^1.0.1
     lint-staged: ^15.5.0
-    obuild: ^0.2.1
+    obuild: ^0.4.33
     simple-git-hooks: ^2.11.1
     tsx: ^4.19.3
     typescript: ^5.8.2
-    vite: ^6.2.1
+    vite: ^6.4.2
     vitepress: ^1.6.4
   testing:
     vitest: ^3.0.8
