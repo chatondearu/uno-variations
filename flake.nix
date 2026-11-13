@@ -1,5 +1,6 @@
 {
   description = "Development shell for uno-variations";
+  # Daily Node/pnpm via Mise (mise.toml); this flake is the hermetic fallback.
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
